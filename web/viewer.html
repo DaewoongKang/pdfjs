@@ -91,6 +91,28 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
       }
     </script>
+    <script id="script" type="module">
+  
+      function loadFont(fontName, fontUrl) {
+        const font = new FontFace(fontName, `url('${fontUrl}')`);
+        font.load().then((loadedFont) => {
+          document.fonts.add(loadedFont);
+        });
+      }
+    
+      loadFont('LIFEPLUSMedium', '/custom-font/font/LIFEPLUS MEDIUM.TTF');
+      loadFont('LIFEPLUSMedium-Bold', '/custom-font/font/LIFEPLUS BOLD.TTF');
+      
+      document.fonts.ready.then((fontFaceSet) => {
+        // Any operation that needs to be done only after all used fonts
+        // have finished loading can go here.
+        const fontFaces = [...fontFaceSet];
+        console.log(fontFaces);
+        // some fonts may still be unloaded if they aren't used on the site
+        console.log(fontFaces.map((f) => f.status));
+      });
+      
+</script>    
     <script src="viewer.js" type="module"></script>
 <!--#endif-->
   </head>

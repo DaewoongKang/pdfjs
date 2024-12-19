@@ -90,12 +90,6 @@ class FontLoader {
 
     if (this.isFontLoadingAPISupported) {
       const { loadedName, src, style } = info;
-      console.log("loadSystemFont", loadedName, src, style, info);
-      if (src === 'local(LIFEPLUSMedium-Bold)') {
-        src = "url('/custom-font/font/LIFEPLUS BOLD.TTF')"
-      } else if (src === 'local(LIFEPLUSMedium)') {
-        src = "url('/custom-font/font/LIFEPLUS MEDIUM.TTF')"
-      }
       const fontFace = new FontFace(loadedName, src, style);
       this.addNativeFontFace(fontFace);
       try {
