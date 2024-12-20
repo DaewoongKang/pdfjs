@@ -91,6 +91,7 @@ class FontLoader {
     if (this.isFontLoadingAPISupported) {
       const { loadedName, src, style } = info;
       const fontFace = new FontFace(loadedName, src, style);
+console.log("loadSystemFont", fontFace);
       this.addNativeFontFace(fontFace);
       try {
         await fontFace.load();
