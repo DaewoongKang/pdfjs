@@ -513,12 +513,13 @@ function getFontSubstitution(
 
   const loadedName = `${idFactory.getDocId()}_s${idFactory.createFontId()}`;
   if (!substitution) {
-    if (!validateFontName(baseFontName)) {
-      warn(`Cannot substitute the font because of its name: ${baseFontName}`);
-      systemFontCache.set(key, null);
-      // If the baseFontName is not valid we don't want to use it.
-      return null;
-    }
+    // custom-font
+    // if (!validateFontName(baseFontName)) {
+    //   warn(`Cannot substitute the font because of its name: ${baseFontName}`);
+    //   systemFontCache.set(key, null);
+    //   // If the baseFontName is not valid we don't want to use it.
+    //   return null;
+    // }
     // Maybe we'll be lucky and the OS will have the font.
     const bold = /bold/gi.test(baseFontName);
     const italic = /oblique|italic/gi.test(baseFontName);

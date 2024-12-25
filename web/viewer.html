@@ -91,28 +91,30 @@ See https://github.com/adobe-type-tools/cmap-resources
         }
       }
     </script>
-    <script id="script" type="module">
+    <script id="script" type="module"> 
+  function loadFont(fontName, fontUrl, descriptors = {}) {
+    const font = new FontFace(fontName, `url('${fontUrl}')`, descriptors);
+    font.custom = true;
+    font.load();
   
-      function loadFont(fontName, fontUrl) {
-        const font = new FontFace(fontName, `url('${fontUrl}')`);
-        font.load().then((loadedFont) => {
-          document.fonts.add(loadedFont);
-        });
-      }
-    
-      loadFont('LIFEPLUSMedium', '/custom-font/font/LIFEPLUS MEDIUM.TTF');
-      loadFont('LIFEPLUSMedium-Bold', '/custom-font/font/LIFEPLUS BOLD.TTF');
-      
-      document.fonts.ready.then((fontFaceSet) => {
-        // Any operation that needs to be done only after all used fonts
-        // have finished loading can go here.
-        const fontFaces = [...fontFaceSet];
-        console.log(fontFaces);
-        // some fonts may still be unloaded if they aren't used on the site
-        console.log(fontFaces.map((f) => f.status));
-      });
-      
-</script>    
+    document.fonts.add(font);
+  }
+  
+  loadFont('LIFEPLUSMedium', '../custom-font/LIFEPLUS MEDIUM.TTF');
+  loadFont('LIFEPLUSMedium-Bold', '../custom-font/LIFEPLUS MEDIUM.TTF', { weight: 'bold'});
+  loadFont('LIFEPLUSº»¹®Light', '../custom-font/LIFEPLUS BODY LIGHT_HINTED.TTF');
+  loadFont('LIFEPLUSº»¹®Light-Bold', '../custom-font/LIFEPLUS BODY LIGHT_HINTED.TTF', { weight: 'bold'});
+  loadFont('LIFEPLUSº»¹®Medium', '../custom-font/LIFEPLUS BODY MEDIUM_HINTED.TTF');
+  loadFont('LIFEPLUSº»¹®Medium-Bold', '../custom-font/LIFEPLUS BODY MEDIUM_HINTED.TTF', { weight: 'bold'});
+  loadFont('LIFEPLUSBold', '../custom-font/LIFEPLUS BOLD.TTF');
+  loadFont('LIFEPLUSBold-Bold', '../custom-font/LIFEPLUS BOLD.TTF', { weight: 'bold'});
+  loadFont('±¼¸²Ã¼', '../custom-font/HANWHAB.TTF');
+  loadFont('±¼¸²Ã¼-Bold', '../custom-font/HANWHAB.TTF', { weight: 'bold'});
+  
+  document.fonts.ready.then((fontFaceSet) => {
+    fontFaceSet.forEach(fontFace =>  console.log(fontFace.family, fontFace.style, fontFace.weight));
+  });  
+</script>
     <script src="viewer.js" type="module"></script>
 <!--#endif-->
   </head>

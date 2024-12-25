@@ -47,8 +47,48 @@
 
 <script src="../build/generic/build/pdf.mjs" type="module"></script>
 <script id="script" type="module">
+/*  
+  function loadFont(fontName, fontUrl) {
+    const font = new FontFace(fontName, `url('${fontUrl}')`, {
+      style: 'italic',
+      weight: '900',
+    });
+    font.load().then((loadedFont) => {
+      document.fonts.add(loadedFont);
+    });
+  }
 
-  const src = './custom-font-12.pdf';
+  loadFont('LIFEPLUSMedium', '/custom-font/font/LIFEPLUS MEDIUM.TTF');
+  loadFont('LIFEPLUSMedium-Bold', '/custom-font/font/LIFEPLUS BOLD.TTF');
+  
+  document.fonts.ready.then((fontFaceSet) => {
+    // Any operation that needs to be done only after all used fonts
+    // have finished loading can go here.
+    const fontFaces = [...fontFaceSet];
+    console.log(fontFaces);
+    // some fonts may still be unloaded if they aren't used on the site
+    console.log(fontFaces.map((f) => f.status));
+  });
+*/  
+</script>    
+
+<script id="script" type="module">
+import { BaseStandardFontDataFactory } from '/src/display/standard_fontdata_factory.js';
+
+class TestStandardFontDataFactory extends BaseStandardFontDataFactory {
+  constructor({baseUrl = null}) {
+    super({baseUrl: null});
+
+  }
+  async _fetch(url) {
+    console.log('test fetch', url);
+    const data = await fetchData(url, /* type = */ "arraybuffer");
+    return new Uint8Array(data);
+  }
+}
+
+  //const src = './custom-font-12.pdf';
+  const src = './test.pdf';
 
   //
   // The workerSrc property shall be specified.
@@ -57,14 +97,19 @@
     '../build/generic/build/pdf.worker.mjs';
 
   
+
   const loadingTask = pdfjsLib.getDocument(
     typeof src === 'object' ? src : {
             url: src,
             cMapUrl: '/build/generic/web/cmaps/',
             cMapPacked: true,
             standardFontDataUrl: '/build/generic/web/standard_fonts/',
+            StandardFontDataFactory:  TestStandardFontDataFactory,
+//            useSystemFonts: false,
+  //          disableFontFace: true,
   });
   const pdf = await loadingTask.promise;
+ // pdf._transport._standardFontDataFactory = new TestStandardFontDataFactory('/build/generic/web/standard_fonts/');
 
   //custom begin
   console.log('PDF', pdf);
